@@ -15,7 +15,7 @@ const withLoader = <P extends object> (Component: React.ComponentType <P>) =>
                     </div>
                 </div>
             ) : (
-                <Component {...props} />
+                <Component {...props as P} />
             )
         }
     };

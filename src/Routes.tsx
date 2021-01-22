@@ -7,6 +7,7 @@ import ProductsPage from "./ProductsPage";
 import ProductPage from "./ProductPage";
 import NotFoundPage from "./NotFoundPage";
 import LoginPage from "./LoginPage";
+import ContactUsPage from './ContactUsPage';
 
 // semua component di dalam project react akan dirender atau diload
 // secara otomatis ketika user mengakses aplikasi atau project ini
@@ -43,7 +44,7 @@ const Routes: React.SFC<RouteComponentProps> = props => {
 
                 <Route exact={true} path="/products" component={ProductsPage} />
                 <Route path="/products/:id" component={ProductPage} />
-                <Route path="/admin" component={AdminPage} />
+                <Route path="/contactus" component={ContactUsPage} />
                 <Route component={NotFoundPage} />
               </Switch>
           </CSSTransition>
