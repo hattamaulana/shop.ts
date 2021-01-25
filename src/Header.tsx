@@ -1,25 +1,30 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter, NavLink } from "react-router-dom";
-import { URLSearchParams } from "url";
 import "url-search-params-polyfill";
 
 import logo from "./logo.svg";
+import BasketSummary from './BasketSummary';
+import { connect } from 'react-redux';
+import { IApplicationState } from './Store';
+
+interface IProps extends RouteComponentProps {
+  basketCount: number;
+}
+
+const mapStateToProps = (store: IApplicationState) => {
+  return {
+    basketCount: store.basket.products.length
+  }
+}
 
 // Perbedaan antara NavLink dan Link adalah :
 // NavLink digunakan untuk berganti halaman maka web browser akan menandai uri atau link pernah dikunjugin
 // Link sebaliknya dari NavLink
-const Header: React.SFC<RouteComponentProps> = props => {
-    const [search, setSearch] = React.useState("");
+class Header extends React.Component<IProps, IState> {
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.currentTarget.value);
-    };
+    public constructor(props: IProps) {
 
-    const handleSearchKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        props.history.push(`/products?search=${search}`);
-      }
-    };
+    }
 
     return (
       <header className="header">
@@ -31,6 +36,8 @@ const Header: React.SFC<RouteComponentProps> = props => {
             onChange={handleSearchChange}
             onKeyDown={handleSearchKeydown}
             />
+
+            <BasketSummary count={ this.props.basketCount } />
         </div>
         <img src={logo} className="header-logo" alt="logo" />
         <h1 className="header-title">React Shop</h1>
@@ -49,4 +56,4 @@ const Header: React.SFC<RouteComponentProps> = props => {
     );
   };
   
-  export default withRouter(Header);
+  export default connect(mapStateToProps)(withRouter(Header));
